@@ -1,0 +1,10 @@
+{
+    "IDS_FLOW_PHYSICS_1_NAME": "Flow Cartography",
+    "IDS_FLOW_PHYSICS_1_DESC": "Fund a small team of Flow physicists. Your empire receives instability forecasts 50% earlier than the public bulletin.",
+    "IDS_FLOW_PHYSICS_2_NAME": "The Claremont Equations",
+    "IDS_FLOW_PHYSICS_2_DESC": "A provincial physicist's heretical model turns out to be right. Forecasts arrive at double the public lead time, including shoal formations.",
+    "IDS_FLOW_PHYSICS_3_NAME": "Predictive Flow Model",
+    "IDS_FLOW_PHYSICS_3_DESC": "Your physicists now know what the Flow will do the moment it decides. You receive every forecast at triple the public lead time. Empires have been saved with less.",
+    "IDS_FLOW_SCARCITY_NAME": "Collapse Economy",
+    "IDS_FLOW_SCARCITY_DESC": "Supply chains of the Interdependency are failing. Ship construction costs are increased."
+}

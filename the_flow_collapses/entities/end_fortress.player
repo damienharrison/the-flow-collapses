@@ -1,0 +1,249 @@
+{
+    "version": 0,
+    "race": "trader",
+    "fleet": "trader_fleet",
+    "fleet_name_group": "fleet",
+    "default_starting_assets": {
+        "credits": 30000,
+        "metal": 7500,
+        "crystal": 5000
+    },
+    "home_planet": {
+        "random_fixture_filling": "random_pirate_planet",
+        "levels": [
+            {
+                "income_rates": {
+                    "credits": 7.5,
+                    "metal": 3.0,
+                    "crystal": 2.5
+                },
+                "modifier_values": {
+                    "max_civilian_structure_slots": {
+                        "additive": 4.0
+                    },
+                    "max_military_structure_slots": {
+                        "additive": 20.0
+                    }
+                }
+            }
+        ]
+    },
+    "starting_units_in_gravity_well": {
+        "required_units": [
+            {
+                "unit": "trader_autocannon_defense_structure",
+                "count": [
+                    15,
+                    20
+                ]
+            },
+            {
+                "unit": "trader_gauss_defense_structure",
+                "count": [
+                    10,
+                    15
+                ]
+            },
+            {
+                "unit": "pirate_heavy_cruiser",
+                "count": [
+                    10,
+                    15
+                ]
+            },
+            {
+                "unit": "pirate_light_frigate",
+                "count": [
+                    20,
+                    30
+                ]
+            }
+        ]
+    },
+    "buildable_strikecraft": [
+        "trader_interceptor_strikecraft",
+        "trader_bomber_strikecraft"
+    ],
+    "unit_limits": {},
+    "buildable_units": [
+        "pirate_light_frigate",
+        "pirate_siege_frigate",
+        "pirate_heavy_cruiser"
+    ],
+    "structure_builder": {
+        "ship": "trader_constructor_ship",
+        "special_operation_unit_kind": "structure_builder"
+    },
+    "structures": [
+        "trader_capital_ship_factory_structure",
+        "trader_frigate_factory_structure",
+        "trader_autocannon_defense_structure",
+        "trader_gauss_defense_structure",
+        "trader_hangar_defense_structure"
+    ],
+    "npc": {
+        "visuals": [
+            {
+                "name": "npc_player_name.end_fortress",
+                "description": "npc_description.end_fortress",
+                "portrait": "pirate_0",
+                "icon": "pirate_0",
+                "color_group": "npc_pirate",
+                "reputation_panel": "pirate_panel"
+            }
+        ],
+        "sounds": {
+            "sounds": {
+                "use_ability_generic": "pirate_npc_use_ability_generic_0",
+                "use_ability_raid_0": "pirate_npc_use_ability_raid_0_0",
+                "use_ability_raid_1": "pirate_npc_use_ability_raid_0_0",
+                "use_ability_purchase_item": "pirate_npc_use_ability_purchase_item_0",
+                "reputation_level_increased": "pirate_npc_reputation_level_increased_0",
+                "insufficient_influence_points": "pirate_npc_insufficient_influence_points_0",
+                "auction_started": "pirate_npc_auction_started_0",
+                "auction_won": "pirate_npc_auction_won_0",
+                "auction_lost": "pirate_npc_auction_lost_0",
+                "auction_ignored": "pirate_npc_auction_ignored_0",
+                "attacking": "pirate_npc_attacking_0"
+            }
+        },
+        "ai_params": {
+            "will_fleet_colonize": false,
+            "will_fleet_retreat": false,
+            "fleet_will_probably_defeat_ratio_range": [
+                0.9,
+                1.1
+            ],
+            "max_jumps_from_home_planet_for_fleets": 1,
+            "pick_another_buildable_attack_ship_type_interval_in_minutes": [
+                0,
+                0
+            ],
+            "desired_explore_ship_count": {
+                "type": "constant",
+                "value": 0
+            }
+        },
+        "max_fleet_supply": {
+            "roam": [
+                500,
+                1000,
+                1500,
+                2000
+            ],
+            "defend": [
+                1200,
+                1800,
+                2500,
+                5000
+            ]
+        },
+        "start_allied_to_playable_players": false,
+        "start_allied_to_other_npc_players": false,
+        "start_allied_to_militia_npc_players": true,
+        "npc_tags": [
+            "pirates"
+        ],
+        "auctions": [
+            {
+                "weight": 1.0,
+                "bid_duration": 75.0,
+                "rewards": [
+                    "credits_stockpile_auction_0",
+                    "credits_stockpile_auction_1",
+                    "credits_stockpile_auction_2",
+                    "credits_stockpile_auction_3"
+                ]
+            },
+            {
+                "weight": 0.5,
+                "bid_duration": 75.0,
+                "rewards": [
+                    "pirate_looting_crew",
+                    "pirate_looting_crew",
+                    "pirate_looting_crew",
+                    "pirate_looting_crew"
+                ]
+            }
+        ],
+        "events": [],
+        "simple_can_ever_be_colonized_planet_types": [
+            "pirate_base"
+        ],
+        "simple_planet_level": 10,
+        "simple_planet_tracks": {
+            "defense": {
+                "max_military_structure_slots": 10,
+                "max_health_points": 12000.0,
+                "health_points_restore_rate": 3.0
+            },
+            "logistics": {
+                "max_civilian_structure_slots": 6,
+                "structure_builder_count": 2
+            },
+            "commerce": {
+                "credits_income_rate": 10,
+                "credits_income_rate_per_population": 0.025
+            },
+            "mining": {
+                "metal_income_rate": 3.0,
+                "crystal_income_rate": 1.5,
+                "metal_income_rate_per_population": 0.01,
+                "crystal_income_rate_per_population": 0.005
+            },
+            "research": {},
+            "surveying": {},
+            "focus": {}
+        },
+        "simple_trade_capacity": {
+            "export_points": {}
+        },
+        "reputation": {
+            "reward_between_gravity_well_range": 10.0,
+            "rewards": [
+                {
+                    "reward": "pirate_boarding_crew",
+                    "required_reputation_level": 0,
+                    "influence_point_cost": 2,
+                    "cooldown_duration": 240
+                },
+                {
+                    "reward": "pirate_smugglers_den",
+                    "required_reputation_level": 1,
+                    "influence_point_cost": 3,
+                    "cooldown_duration": 240
+                },
+                {
+                    "reward": "pirate_wager",
+                    "required_reputation_level": 2,
+                    "influence_point_cost": 6,
+                    "cooldown_duration": 360
+                },
+                {
+                    "reward": "send_pirate_raid",
+                    "required_reputation_level": 3,
+                    "influence_point_cost": 10,
+                    "cooldown_duration": 480
+                }
+            ],
+            "levels": [
+                {
+                    "influence_point_cost": 2,
+                    "npc_modifiers": {}
+                },
+                {
+                    "influence_point_cost": 3,
+                    "npc_modifiers": {}
+                },
+                {
+                    "influence_point_cost": 6,
+                    "npc_modifiers": {}
+                },
+                {
+                    "influence_point_cost": 10,
+                    "npc_modifiers": {}
+                }
+            ]
+        }
+    }
+}

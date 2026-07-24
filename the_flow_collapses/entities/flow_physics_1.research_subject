@@ -1,0 +1,26 @@
+{
+    "_comment": [
+        "FLOW PHYSICS TIER 1: Flow Cartography.",
+        "Template research subject. Validate every field against the",
+        "research_subject JSON schema in the modding tools (json_schemas",
+        "folder) and against a vanilla example such as one of the TEC",
+        "civilian research subjects. Duplicate per faction with the",
+        "faction's research domain/field names. The subject's only hard",
+        "mechanical effect is its completion flag, which the scenario Lua",
+        "reads via Bindings.player_flow_physics_tier."
+    ],
+    "version": 1,
+    "field": "civilian_research",
+    "field_coord": [2, 4],
+    "name_uppercase": "IDS_FLOW_PHYSICS_1_NAME",
+    "name": "IDS_FLOW_PHYSICS_1_NAME",
+    "description": "IDS_FLOW_PHYSICS_1_DESC",
+    "hud_icon": "research_civilian_generic",
+    "price": {
+        "credits": 800,
+        "metal": 100,
+        "crystal": 150
+    },
+    "research_time_in_seconds": 90,
+    "prerequisites": []
+}

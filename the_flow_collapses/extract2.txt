@@ -1,0 +1,288 @@
+Created At: 2026-07-18T18:46:05Z
+Completed At: 2026-07-18T18:46:05Z
+File Path: `file:///C:/Users/DamienHarrison/Downloads/the_flow_collapses_mod_v4/the_flow_collapses/README.md`
+Total Lines: 90
+Total Bytes: 8087
+Showing lines 1 to 90
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: # The Flow Collapses
+2: 
+3: A Sins of a Solar Empire II mod inspired by John Scalzi's Interdependency trilogy (The Collapsing Empire, The Consuming Fire, The Last Emperox). Inter-system travel depends entirely on Flow streams, and the Flow is dying. Streams destabilise, shift and collapse as the game runs. Hold Hub while the network shrinks around you, or fortify End and wait for the door to close behind everyone else.
+4: 
+5: ## What is in the box
+6: 
+7: ```
+8: the_flow_collapses/
+9: ├── .mod_meta_data                      Mod manifest (compatibility_version 2)
+10: ├── uniforms/
+11: │   └── scenario.uniforms               Registers the map with the game
+12: ├── scenarios/
+13: │   └── the_interdependency.scenario    The Flow network map (generated)
+14: ├── scripts/
+15: │   └── flow_collapse.lua               Stream collapse / shift event logic
+16: └── tools/
+17:     └── generate_map.py                 Regenerates the map, tweak and rerun
+18: ```
+19: 
+20: ## The design
+21: 
+22: A six player map. Nine systems
+
+Created At: 2026-07-18T19:07:49Z
+Completed At: 2026-07-18T19:07:58Z
+Title: Lua Event Tutorial
+
+The full content of the article at https://wiki.sinsofasolarempire2.com/space/SSEFW/3170238513/Lua+Event+Tutorial has been saved to: C:\Users\DamienHarrison\.gemini\antigravity-ide\brain\23fb09bb-e712-41c4-9062-9f0ea894da76\.system_generated\steps\159\content.md
+
+You can use the view_file tool to read specific sections if needed.
+
+Created At: 2026-07-18T19:08:02Z
+Completed At: 2026-07-18T19:08:02Z
+File Path: `file:///C:/Users/DamienHarrison/.gemini/antigravity-ide/brain/23fb09bb-e712-41c4-9062-9f0ea894da76/.system_generated/steps/159/content.md`
+Total Lines: 75
+Total Bytes: 4482
+Showing lines 1 to 75
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: Title: Lua Event Tutorial
+2: 
+3: Source: https://wiki.sinsofasolarempire2.com/space/SSEFW/3170238513/Lua+Event+Tutorial
+4: 
+5: ---
+6: 
+7: 
+8: ## Stardock.com Navigation
+9: [Software](https://www.stardock.com/products/)
+10: [Object Desktop
+11: 								Your complete Windows customization suite.](https://www.stardock.com/products/odnt/)
+12: [Start11
+13: 								Customize the Start Menu and Taskbar in Windows 10/11.](https://www.stardock.com/products/start11/)
+14: [Fences 4
+15: 								Automatically organize your desktop apps, files, and folders on Windows 10 and 11.](https://www.stardock.com/products/fences/)
+16: [DeskScapes
+17: 								Personalize your desktop background with animated pictures and video.](https://www.stardock.com/products/deskscapes/)
+18: [Multiplicity
+19: 								Connect multiple PCs with one keyboard and mouse.](https://www.stardock.com/products/multiplicity/)
+20: [Groupy
+21: 								Organize multiple applications into grouped tabs on your Windows d
+Created At: 2026-07-18T19:09:08Z
+Completed At: 2026-07-18T19:09:08Z
+File Path: `file:///C:/Users/DamienHarrison/Downloads/the_flow_collapses_mod_v4/the_flow_collapses/README.md`
+Total Lines: 90
+Total Bytes: 8087
+Showing lines 1 to 90
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: # The Flow Collapses
+2: 
+3: A Sins of a Solar Empire II mod inspired by John Scalzi's Interdependency trilogy (The Collapsing Empire, The Consuming Fire, The Last Emperox). Inter-system travel depends entirely on Flow streams, and the Flow is dying. Streams destabilise, shift and collapse as the game runs. Hold Hub while the network shrinks around you, or fortify End and wait for the door to close behind everyone else.
+4: 
+5: ## What is in the box
+6: 
+7: ```
+8: the_flow_collapses/
+9: ├── .mod_meta_data                      Mod manifest (compatibility_version 2)
+10: ├── uniforms/
+11: │   └── scenario.uniforms               Registers the map with the game
+12: ├── scenarios/
+13: │   └── the_interdependency.scenario    The Flow network map (generated)
+14: ├── scripts/
+15: │   └── flow_collapse.lua               Stream collapse / shift event logic
+16: └── tools/
+17:     └── generate_map.py                 Regenerates the map, tweak and rerun
+18: ```
+19: 
+20: ## The design
+21: 
+22: A six player map. Nine systems
+
+Created At: 2026-07-18T19:25:06Z
+Completed At: 2026-07-18T19:25:06Z
+File Path: `file:///C:/Users/DamienHarrison/Downloads/the_flow_collapses_mod_v4/the_flow_collapses/scripts/flow_collapse.lua`
+Total Lines: 440
+Total Bytes: 18629
+Showing lines 350 to 440
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+350:     if now >= state.next_event_time then begin_event(now) end
+351: end
+352: 
+353: -- ---------------------------------------------------------------------------
+354: -- BINDINGS: align these with the official Lua Event Tutorial
+355: -- https://wiki.sinsofasolarempire2.com/space/SSEFW/3170238513/Lua+Event+Tutorial
+356: -- Each function documents its intent; swap the body for the real API call.
+357: -- ---------------------------------------------------------------------------
+358: Bindings = {}
+359: 
+360: -- Human readable name for notifications, derived from the stream id.
+361: function Bindings.stream_display_name(stream_id)
+362:     local a, b = stream_id:match("^(%w+)_(%w+)$")
+363:     local function cap(s) return s:sub(1, 1):upper() .. s:sub(2) end
+364:     if a and b then return cap(a) .. " to " .. cap(b) end
+365:     return stream_id
+366: end
+367: 
+368: -- TODO: replace with the engine call that removes / disables the wormhole
+369: -- lane between the two shoal fixtures for thi
+Created At: 2026-07-19T09:46:43Z
+Completed At: 2026-07-19T09:46:43Z
+File Path: `file:///C:/Users/DamienHarrison/Downloads/the_flow_collapses_mod_v4/the_flow_collapses/scripts/flow_collapse.lua`
+Total Lines: 461
+Total Bytes: 18551
+Showing lines 350 to 461
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+350:     if now >= state.next_event_time then begin_event(now) end
+351: end
+352: 
+353: -- ---------------------------------------------------------------------------
+354: -- BINDINGS: align these with the official Lua Event Tutorial
+355: -- https://wiki.sinsofasolarempire2.com/space/SSEFW/3170238513/Lua+Event+Tutorial
+356: -- Each function documents its intent; swap the body for the real API call.
+357: -- ---------------------------------------------------------------------------
+358: Bindings = {}
+359: 
+360: -- Human readable name for notifications, derived from the stream id.
+361: function Bindings.stream_display_name(stream_id)
+362:     local a, b = stream_id:match("^(%w+)_(%w+)$")
+363:     local function cap(s) return s:sub(1, 1):upper() .. s:sub(2) end
+364:     if a and b then return cap(a) .. " to " .. cap(b) end
+365:     return stream_id
+366: end
+367: 
+368: local event_context = nil
+369: local flow_metadata = nil
+370: pcall(function() flow_metadata = dofile("scripts/flow_data.lua")
+
+Created At: 2026-07-19T09:47:02Z
+Completed At: 2026-07-19T09:47:04Z
+Title: Lua Event Tutorial
+
+The full content of the article at https://wiki.sinsofasolarempire2.com/space/SSEFW/3170238513/Lua+Event+Tutorial has been saved to: C:\Users\DamienHarrison\.gemini\antigravity-ide\brain\23fb09bb-e712-41c4-9062-9f0ea894da76\.system_generated\steps\764\content.md
+
+You can use the view_file tool to read specific sections if needed.
+
+Created At: 2026-07-19T09:47:08Z
+Completed At: 2026-07-19T09:47:08Z
+File Path: `file:///C:/Users/DamienHarrison/.gemini/antigravity-ide/brain/23fb09bb-e712-41c4-9062-9f0ea894da76/.system_generated/steps/764/content.md`
+Total Lines: 75
+Total Bytes: 4482
+Showing lines 1 to 75
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: Title: Lua Event Tutorial
+2: 
+3: Source: https://wiki.sinsofasolarempire2.com/space/SSEFW/3170238513/Lua+Event+Tutorial
+4: 
+5: ---
+6: 
+7: 
+8: ## Stardock.com Navigation
+9: [Software](https://www.stardock.com/products/)
+10: [Object Desktop
+11: 								Your complete Windows customization suite.](https://www.stardock.com/products/odnt/)
+12: [Start11
+13: 								Customize the Start Menu and Taskbar in Windows 10/11.](https://www.stardock.com/products/start11/)
+14: [Fences 4
+15: 								Automatically organize your desktop apps, files, and folders on Windows 10 and 11.](https://www.stardock.com/products/fences/)
+16: [DeskScapes
+17: 								Personalize your desktop background with animated pictures and video.](https://www.stardock.com/products/deskscapes/)
+18: [Multiplicity
+19: 								Connect multiple PCs with one keyboard and mouse.](https://www.stardock.com/products/multiplicity/)
+20: [Groupy
+21: 								Organize multiple applications into grouped tabs on your Windows d
+
+Created At: 2026-07-19T10:30:38Z
+Completed At: 2026-07-19T10:30:38Z
+File Path: `file:///C:/Users/DamienHarrison/Downloads/the_flow_collapses_mod_v4/the_flow_collapses/README.md`
+Total Lines: 90
+Total Bytes: 8087
+Showing lines 1 to 90
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: # The Flow Collapses
+2: 
+3: A Sins of a Solar Empire II mod inspired by John Scalzi's Interdependency trilogy (The Collapsing Empire, The Consuming Fire, The Last Emperox). Inter-system travel depends entirely on Flow streams, and the Flow is dying. Streams destabilise, shift and collapse as the game runs. Hold Hub while the network shrinks around you, or fortify End and wait for the door to close behind everyone else.
+4: 
+5: ## What is in the box
+6: 
+7: ```
+8: the_flow_collapses/
+9: ├── .mod_meta_data                      Mod manifest (compatibility_version 2)
+10: ├── uniforms/
+11: │   └── scenario.uniforms               Registers the map with the game
+12: ├── scenarios/
+13: │   └── the_interdependency.scenario    The Flow network map (generated)
+14: ├── scripts/
+15: │   └── flow_collapse.lua               Stream collapse / shift event logic
+16: └── tools/
+17:     └── generate_map.py                 Regenerates the map, tweak and rerun
+18: ```
+19: 
+20: ## The design
+21: 
+22: A six player map. Nine systems
+The USER performed the following action:
+Show the contents of file c:\Users\DamienHarrison\Downloads\the_flow_collapses_mod_v4\the_flow_collapses\README.md from lines 61 to 74
+File Path: `file:///c:/Users/DamienHarrison/Downloads/the_flow_collapses_mod_v4/the_flow_collapses/README.md`
+Total Lines: 74
+Total Bytes: 5069
+Showing lines 61 to 74
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+61: For quick map-only testing without the mod system, you can also drop the `.scenario` file into `%localappdata%\sins2\drop_in_scenarios\`.
+62: 
+63: ## Tuning
+64: 
+65: Everything interesting lives at the top of the two files:
+66: 
+67: - `tools/generate_map.py`: systems, streams, dormant streams, planets per system, ring radii. Rerun with `python generate_map.py` after editing.
+68: - `scripts/flow_collapse.lua`: `CONFIG` table for timings and reopen chance, `COLLAPSE_WEIGHT` for which streams die first, `ONE_WAY_STREAMS` if you want directional Flow flavour.
+69: 
+70: ## Sources
+71: 
+72: - Custom scenario and mod structure: StardockCorp sins2modtools, docs/making_a_custom_scenario.md
+73: - Lua Event Tutorial: wiki.sinsofasolarempire2.com (SSEFW/3170238513)
+74: 
+
+
+Created At: 2026-07-19T10:36:36Z
+Completed At: 2026-07-19T10:36:36Z
+File Path: `file:///C:/Users/DamienHarrison/Downloads/the_flow_collapses_mod_v4/the_flow_collapses/scripts/flow_collapse.lua`
+Total Lines: 553
+Total Bytes: 22932
+Showing lines 350 to 450
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+350:             stream_id = p.stream_id, kind = "collapse",
+351:             fire_time = now + lifespan,
+352:             base_lead = CONFIG.warning_lead_time_s,
+353:             notified = {},
+354:         }
+355:         state.next_event_time = nil -- clear random timer
+356:         update_scarcity(-1)
+357:         return -- skip schedule_next so the forced collapse happens next
+358:     end
+359:     schedule_next(now)
+360: end
+361: 
+362: -- Called every tick / on a repeating timer.
+363: local function on_update(now)
+364:     if not state.initial_spawns_done then
+365:         state.initial_spawns_done = true
+366:         
+367:         -- Spawn Dalasysla Derelicts
+368:         local dp = flow_metadata and flow_metadata.dalasysla_planets
+369:         if dp and #dp >= 3 then
+370:             Bindings.spawn_unit(dp[2], "trader_starbase", ":Dalasysla Bastion 1")
+371:             Bindings.spawn_unit(dp[3], "trader_starbase", ":Dalasysla Bastion 2")
+372:             Bindings.spawn_unit(dp[1], 
+
+
+Created At: 2026-07-19T11:06:26Z
+Completed At: 2026-07-19T11:06:30Z
+
+				The command failed with exit code: 1
+				Output:
+				Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import json; [print(json.loads(line).get('content', '')[:1000]) for line in open(r'C:\Users\DamienHarrison\.gemini\antigravity-ide\brain\23fb09bb-e712-41c4-9062-9f0ea894da76\.system_generated\logs\transcript.jsonl', encoding='utf-8') if 'Lua Event Tutorial' in line]
+                  ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DamienHarrison\AppData\Local\Python\pythoncore-3.14-64\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 983-985: character maps to <undefined>
+
+

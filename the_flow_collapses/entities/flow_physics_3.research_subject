@@ -1,0 +1,33 @@
+{
+    "_comment": [
+        "FLOW PHYSICS TIER 3: Predictive Flow Model.",
+        "Template research subject. Validate every field against the",
+        "research_subject JSON schema in the modding tools (json_schemas",
+        "folder) and against a vanilla example such as one of the TEC",
+        "civilian research subjects. Duplicate per faction with the",
+        "faction's research domain/field names. The subject's only hard",
+        "mechanical effect is its completion flag, which the scenario Lua",
+        "reads via Bindings.player_flow_physics_tier."
+    ],
+    "version": 1,
+    "field": "civilian_research",
+    "field_coord": [
+        4,
+        4
+    ],
+    "name_uppercase": "IDS_FLOW_PHYSICS_3_NAME",
+    "name": "IDS_FLOW_PHYSICS_3_NAME",
+    "description": "IDS_FLOW_PHYSICS_3_DESC",
+    "hud_icon": "research_civilian_generic",
+    "price": {
+        "credits": 4500,
+        "metal": 500,
+        "crystal": 900
+    },
+    "research_time_in_seconds": 240,
+    "prerequisites": [
+        [
+            "flow_physics_2"
+        ]
+    ]
+}
