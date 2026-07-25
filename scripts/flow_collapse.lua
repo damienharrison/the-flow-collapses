@@ -35,8 +35,11 @@ local CONFIG = {
     evacuation_lead_time_s = 600,   -- 10 min evacuation window
     evacuation_notice_s    = 300,   -- one-time "eligible" notice
     flow_physics_lead_mult = { [0] = 1.0, [1] = 1.5, [2] = 2.0, [3] = 3.0 },
-    scarcity_pct_per_collapse = 6,   -- +6% ship cost per collapse
-    scarcity_pct_cap          = 48,  -- runaway inflation, but not infinite
+    scarcity_pct_per_collapse = 6,   -- +6% cost increase per stream collapse
+    inflation_interval_s      = 600, -- Periodic inflation tick every 10 minutes (600s)
+    inflation_pct_per_tick    = 5,   -- +5% price increase across ships, structures, and research every 10 mins
+    aggression_interval_s     = 900, -- Aggression escalation tick every 15 minutes (900s)
+    scarcity_pct_cap          = 100, -- Total galactic cost inflation cap (+100%)
     throne_tax_interval_s     = 300, -- 5 minutes between imperial tax payouts
     throne_tax_credits        = 2500,-- Credits granted to the Emperox
     rng_seed              = nil,    -- set a number for reproducible games
@@ -92,6 +95,10 @@ local state = {
                      --   public_notified = bool, evac_notified = bool }
     next_event_time = nil,
     next_tax_time = CONFIG.throne_tax_interval_s,
+    next_inflation_time = CONFIG.inflation_interval_s,
+    next_aggression_time = CONFIG.aggression_interval_s,
+    periodic_inflation_level = 0,
+    aggression_level = 1,
     eligibility_announced = {},  -- player_index -> true (one-time notice sent)
     scarcity_level = 0,          -- net collapses, drives ship price inflation
 }
@@ -279,24 +286,25 @@ local function deliver_notices(now)
     end
 end
 
--- Scarcity: net collapses drive ship price inflation across all empires.
-local function scarcity_pct()
-    return math.min(state.scarcity_level * CONFIG.scarcity_pct_per_collapse,
-                    CONFIG.scarcity_pct_cap)
+-- Total Inflation: combines stream collapse scarcity with periodic economic breakdown.
+local function total_scarcity_pct()
+    local collapse_pct = state.scarcity_level * CONFIG.scarcity_pct_per_collapse
+    local periodic_pct = state.periodic_inflation_level * CONFIG.inflation_pct_per_tick
+    return math.min(collapse_pct + periodic_pct, CONFIG.scarcity_pct_cap)
 end
 
 local function update_scarcity(delta)
     state.scarcity_level = math.max(0, state.scarcity_level + delta)
-    local pct = scarcity_pct()
-    Bindings.apply_scarcity_level(state.scarcity_level, pct)
+    local pct = total_scarcity_pct()
+    Bindings.apply_scarcity_level(state.scarcity_level + state.periodic_inflation_level, pct)
     if delta > 0 then
         Bindings.notify_all(
-            ("INTERDEPENDENCY MARKETS: another supply route is gone. " ..
-             "Shipyard prices rise to +%d%% above pre-collapse rates."):format(pct))
+            ("INTERDEPENDENCY MARKETS: another supply route is gone! " ..
+             "Galactic prices rise to +%d%% across ships, structures, and tech."):format(pct))
     elseif state.scarcity_level >= 0 then
         Bindings.notify_all(
             ("INTERDEPENDENCY MARKETS: restored trade eases shortages. " ..
-             "Shipyard prices settle at +%d%%."):format(pct))
+             "Galactic cost inflation settles at +%d%%."):format(pct))
     end
 end
 
@@ -386,7 +394,23 @@ local function on_update(now)
     end
     if now >= state.next_event_time then begin_event(now) end
 
-    -- Task 2: The Throne at Xi'an
+    -- Task 2: Periodic Galactic Inflation (+5% cost increase every 10 minutes)
+    if now >= state.next_inflation_time then
+        state.next_inflation_time = now + CONFIG.inflation_interval_s
+        state.periodic_inflation_level = state.periodic_inflation_level + 1
+        local total_pct = total_scarcity_pct()
+        Bindings.apply_scarcity_level(state.scarcity_level + state.periodic_inflation_level, total_pct)
+        Bindings.notify_all(("INTERDEPENDENCY ECONOMIC CRISIS: Industrial supply collapse raises galactic costs by +5%%! Total market inflation: +%d%% across ships, structures, and research."):format(total_pct))
+    end
+
+    -- Task 3: Escalating Minor Faction & Pirate Aggression (Every 15 minutes)
+    if now >= state.next_aggression_time then
+        state.next_aggression_time = now + CONFIG.aggression_interval_s
+        state.aggression_level = state.aggression_level + 1
+        Bindings.notify_all(("PIRATE & MINOR HOUSE ESCALATION (Threat Level %d): Scarcity pushes warlords and house raiders into fierce aggression! Stronghold garrisons have been reinforced."):format(state.aggression_level))
+    end
+
+    -- Task 4: The Throne at Xi'an
     if now >= state.next_tax_time then
         state.next_tax_time = now + CONFIG.throne_tax_interval_s
         local xian_node = flow_metadata and flow_metadata.xian_node_id
@@ -394,7 +418,7 @@ local function on_update(now)
             local owner = Bindings.get_planet_owner(xian_node)
             if owner and owner >= 0 and owner <= 5 then
                 Bindings.add_player_credits(owner, CONFIG.throne_tax_credits)
-                Bindings.notify_all(("IMPERIAL DECREE: The Emperox at Xi'an (Player %d) has collected %d credits in imperial taxes from the Interdependency."):format(owner, CONFIG.throne_tax_credits))
+                Bindings.notify_all(("IMPERIAL DECREE: The Emperox at Xi'an (Player %d) collected %d credits in imperial taxes. (Warning: Market inflation at +%d%% draws aggressive raiders toward Hub!)"):format(owner, CONFIG.throne_tax_credits, total_scarcity_pct()))
             end
         end
     end

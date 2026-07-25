@@ -50,12 +50,11 @@ All playable factions (Trader, Vasari, Advent) have access to Phase Gates (Phase
 ### 5. One-Way Streams & Isolation
 The End system's connection to Hub is extremely volatile. It will eventually collapse on its own independent timer, completely isolating whoever is inside unless it randomly flickers back open. 
 
-### 6. Restored Houses & Pirate Blockades
-The six Houses of the Interdependency exist as active minor factions (e.g. `alutar_sect`, `aluxian_resurgence`), ready to be courted.
-Meanwhile, Hub and End are completely overrun by Pirate Blockades spawned with scaled defenders and high loot levels.
+### 8. Periodic Galactic Inflation
+As the Interdependency collapses, trade networks crumble. Every **10 minutes**, global inflation increases costs by **+5%** across all ships, structures, and research. Each collapsed Flow stream adds an extra **+6%** scarcity surcharge (capping at +100%).
 
-### 7. Flow Physics & Rachela's Prophecy
-A multi-tier Flow Physics research tree exists. Advancing through it allows you to get earlier warnings about stream collapses. Reaching Tier 3 grants you exclusive access to Rachela's Prophecy dialogue, giving you a massive head start on the public bulletins.
+### 9. Escalating Pirate & Minor House Aggression
+Resource scarcity pushes pirate warlords and minor house raiders into fierce desperation. Every **15 minutes**, aggression threat levels escalate (`PIRATE & MINOR HOUSE ESCALATION`). Stronghold garrisons at Hub and End receive reinforcement calls, and holding the Imperial Throne at Xi'an draws increasingly aggressive raid waves!
 
 ## Installation
 
