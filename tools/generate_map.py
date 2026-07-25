@@ -133,8 +133,6 @@ SYSTEMS = {
 }
 
 FLOW_STREAMS = [
-    # End connects from Hub towards the center
-    ("hub", "end"),
     # Hub connects to all 6 player stars
     ("hub", "ikoyi"),
     ("hub", "bremen"),
@@ -145,6 +143,8 @@ FLOW_STREAMS = [
 ]
 
 DORMANT_STREAMS = [
+    # End is isolated from standard star phase lanes; requires Phase Gates or rare volatile Terhathum stream
+    ("terhathum", "end"),
     # Dalasysla starts isolated. Lua script opens these as flicker streams.
     ("ikoyi", "dalasysla"),
     ("bremen", "dalasysla"),
@@ -374,6 +374,12 @@ def build():
         shoals[sys_id] = shoal_id
 
     for a, b in FLOW_STREAMS:
+        all_lanes.append({
+            "node_a": shoals[a], "node_b": shoals[b],
+            "type": "normal"
+        })
+
+    for a, b in DORMANT_STREAMS:
         all_lanes.append({
             "node_a": shoals[a], "node_b": shoals[b],
             "type": "normal"

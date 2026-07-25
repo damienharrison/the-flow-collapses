@@ -354,6 +354,14 @@ local function on_update(now)
         state.next_event_time = CONFIG.first_event_delay_s
     end
 
+    -- Remove dormant stream lanes on tick 1 so they start closed
+    if not state.initialized then
+        state.initialized = true
+        for id in pairs(state.dormant) do
+            Bindings.remove_stream_lane(id)
+        end
+    end
+
     -- Flow Awakening countdown bulletins (0 to 3600 seconds)
     if not state.awakened then
         if state.last_bulletin == nil then state.last_bulletin = -1 end
@@ -366,7 +374,7 @@ local function on_update(now)
             end
         elseif now >= CONFIG.first_event_delay_s then
             state.awakened = true
-            Bindings.notify_all("THE FLOW AWAKENS! The 1-hour mark has been reached. Inter-system Flow streams are phasing in! Evanescent streams will now phase in and out randomly across the galaxy.")
+            Bindings.notify_all("THE FLOW AWAKENS! The 1-hour mark has been reached. Inter-system Flow streams are phasing in! (Note: End is excluded from natural star streams; construct Phase Gates to breach End).")
         end
     end
 

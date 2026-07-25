@@ -23,7 +23,7 @@ the_flow_collapses/
 A six player map. Nine systems arranged as the Flow network from the books:
 
 - **Hub** (player 1): the centre, five streams, six rich planets. The prize of the map, heavily fortified with massive Pirate Blockades on every planet. The central planet is **Xi'an**.
-- **End** (player 2): nearly as rich as Hub, heavily defended by Pirate Blockades, and reachable only via the Terhathum stream. Its wealth is protected less by guns and more by geography: one door, and that door is the least stable stream on the map.
+- **End** (player 2): nearly as rich as Hub, heavily defended by Pirate Blockades, and cut off from natural star phase lanes. Its wealth is protected by geography and isolation: reaching End requires **Phase Gate** construction (building Phase Gates to link to End's Phase Gate) or accessing the rare Terhathum volatile stream when it occasionally flickers open.
 - **Ikoyi, Bremen, Terhathum, Kivu** (players 3 to 6): standard middle ring starts.
 - **Melacrion**: unowned free real estate, the tempting expansion that might strand your fleet.
 - **Dalasysla**: dead system behind a dormant stream. Two capturable starbases (Dalasysla Bastion 1 and 2) guard the shoal approach, and a derelict capital flotilla sits at the inner planet: the *IS Tell Me Another One*, the *Auvergne* and the *Oliveer Bransid*, all capturable. If the Bremen stream reopens mid-game as a flicker stream, the race is on.
@@ -39,17 +39,22 @@ The Interdependency's political design relies on enforced mutual dependence: no 
 ### 2. The Throne at Xi'an
 Holding the central planet of the Hub (Xi'an) grants you the title of Emperox. The Lua script automatically checks ownership of Xi'an every 5 minutes and taxes the Interdependency on your behalf, granting you a massive credit injection.
 
-### 3. Evanescent "Flicker Streams"
-The Flow is unstable. Occasionally, the script will open a temporary "raid window" by forming a stream to a dormant system (like Dalasysla). A strict lifespan is announced publicly. You must dash through, secure the derelicts, and get out before the stream collapses again, trapping you forever.
+### 3. Flow Awakening & Evanescent "Flicker Streams"
+- **Flow Awakening at 1-Hour Mark**: For the first 60 minutes, inter-system Flow streams remain dormant, allowing factions to build up their home systems and prepare for the galactic collapse. In-game broadcasts deliver periodic countdown bulletins (`Flow awakening in X minutes...`). At the 1-hour mark, inter-system star travel awakens!
+- **Dynamic Evanescent Phasing**: After 60 minutes, streams phase in and out randomly on 5-10 minute intervals.
+- **Daleceisla Raid Windows**: The dormant system of Daleceisla periodically phases in as an evanescent flicker stream with a publicly broadcasted raid window (10-15 minutes). Players must rush through, secure the derelicts and starbases, and retreat before the stream phases out again!
 
-### 4. One-Way Streams & Isolation
+### 4. Phase Gate Routing (All Factions)
+All playable factions (Trader, Vasari, Advent) have access to Phase Gates (Phase Lane Stabilizers). Constructing Phase Gates in your owned gravity wells creates direct phase links between them. This allows all factions to build player-controlled bypass phase routes across the galaxy, providing a vital strategic counter when natural Flow streams collapse!
+
+### 5. One-Way Streams & Isolation
 The End system's connection to Hub is extremely volatile. It will eventually collapse on its own independent timer, completely isolating whoever is inside unless it randomly flickers back open. 
 
-### 5. Restored Houses & Pirate Blockades
+### 6. Restored Houses & Pirate Blockades
 The six Houses of the Interdependency exist as active minor factions (e.g. `alutar_sect`, `aluxian_resurgence`), ready to be courted.
-Meanwhile, Hub and End are completely overrun by Pirate Blockades spawned immediately on tick 1 by the Lua script (Starbases and heavy cruisers on every planet) ensuring they are terrifying fortresses to crack.
+Meanwhile, Hub and End are completely overrun by Pirate Blockades spawned with scaled defenders and high loot levels.
 
-### 6. Flow Physics & Rachela's Prophecy
+### 7. Flow Physics & Rachela's Prophecy
 A multi-tier Flow Physics research tree exists. Advancing through it allows you to get earlier warnings about stream collapses. Reaching Tier 3 grants you exclusive access to Rachela's Prophecy dialogue, giving you a massive head start on the public bulletins.
 
 ## Installation

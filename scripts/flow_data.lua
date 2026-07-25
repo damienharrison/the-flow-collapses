@@ -14,8 +14,12 @@ return {
   ["dalasysla_planets"] = { 76, 77, 78 },
   ["hub_end_nodes"] = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 },
   ["home_militia_nodes"] = { 29, 30, 31, 37, 38, 39, 45, 46, 47, 53, 54, 55, 61, 62, 63, 69, 70, 71 },
-  ["active_streams"] = { "hub_end", "hub_ikoyi", "hub_bremen", "hub_terhathum", "hub_kivu", "hub_melacrion", "hub_blight" },
+  ["active_streams"] = { "hub_ikoyi", "hub_bremen", "hub_terhathum", "hub_kivu", "hub_melacrion", "hub_blight" },
   ["dormant_streams"] = { {
+  ["id"] = "terhathum_end",
+  ["node_a"] = 50,
+  ["node_b"] = 26
+}, {
   ["id"] = "ikoyi_dalasysla",
   ["node_a"] = 34,
   ["node_b"] = 79
