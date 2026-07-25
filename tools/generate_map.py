@@ -268,9 +268,9 @@ def make_system(sys_id, spec, nid):
         nid += 1
 
     shoal_id = nid
-    shoal_name = f":{spec['name']} Flow Shoal"
+    shoal_name = f":{spec['name']} Phase Gate & Flow Shoal"
     if sys_id == "hub":
-        shoal_name = ":Naffa Dolg Memorial Shoal"
+        shoal_name = ":Naffa Dolg Phase Gate & Memorial Shoal"
         
     shoal_node = {
         "id": shoal_id,
@@ -286,7 +286,7 @@ def make_system(sys_id, spec, nid):
     # Modelled as ship artifacts on unowned nodes (the mapmaker convention:
     # ship groups are only allowed on unowned colonizable bodies).
     if sys_id == "dalasysla":
-        shoal_node["primary_fixture_override_name"] = ":Dalasysla Flow Shoal (dormant)"
+        shoal_node["primary_fixture_override_name"] = ":Daleceisla Phase Gate & Flow Shoal (evanescent)"
         # Sins 2 1.51+ schema no longer supports 'artifacts' arrays on nodes. 
         # For the derelict fleet, you will need to spawn them via scenario triggers 
         # or use a custom 'npc_filling_name'. I have commented this out to fix the generation errors.
@@ -376,7 +376,7 @@ def build():
     for a, b in FLOW_STREAMS:
         all_lanes.append({
             "node_a": shoals[a], "node_b": shoals[b],
-            "type": "wormhole"
+            "type": "normal"
         })
 
     for i, lane in enumerate(all_lanes):

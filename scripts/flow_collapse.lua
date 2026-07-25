@@ -26,25 +26,15 @@
 -- CONFIG
 -- ---------------------------------------------------------------------------
 local CONFIG = {
-    first_event_delay_s   = 1800,   -- 30 min of peace before the Flow stirs
-    min_interval_s        = 900,    -- then an event every 15 to 25 minutes
-    max_interval_s        = 1500,
-    warning_lead_time_s   = 300,    -- 5 min warning before a collapse lands
-    reopen_chance         = 0.35,   -- chance an event opens a stream instead
-    protect_last_stream_s = 5400,   -- never fully isolate a home system
-                                    -- before the 90 minute mark
-    -- Evacuation window (The Last Emperox): when a collapse would isolate
-    -- a player's home system, they get a much longer, personal countdown.
-    evacuation_lead_time_s = 1200,  -- 20 min to get everything out
-    evacuation_notice_s    = 600,   -- one-time "eligible" notice, this long
-                                    -- after protection expires at the earliest
-    -- Flow Physics research line: how much earlier each tier learns of an
-    -- event, as a multiplier on the base warning lead. Tier 0 is everyone.
-    -- Tier 3 hears about the collapse the moment the Flow decides.
+    first_event_delay_s   = 3600,   -- Star travel awakens at the 1-hour mark (60 min)
+    min_interval_s        = 300,    -- then an event every 5 to 10 minutes
+    max_interval_s        = 600,
+    warning_lead_time_s   = 180,    -- 3 min warning before a stream collapses
+    reopen_chance         = 0.50,   -- 50% chance an event opens an evanescent stream (e.g. Daleceisla)
+    protect_last_stream_s = 5400,   -- 90 minutes protection for final home system stream
+    evacuation_lead_time_s = 600,   -- 10 min evacuation window
+    evacuation_notice_s    = 300,   -- one-time "eligible" notice
     flow_physics_lead_mult = { [0] = 1.0, [1] = 1.5, [2] = 2.0, [3] = 3.0 },
-    -- Scarcity: the Interdependency's supply chains die with the network.
-    -- Every collapsed stream raises ship build prices for everyone; every
-    -- reopened stream relieves it slightly.
     scarcity_pct_per_collapse = 6,   -- +6% ship cost per collapse
     scarcity_pct_cap          = 48,  -- runaway inflation, but not infinite
     throne_tax_interval_s     = 300, -- 5 minutes between imperial tax payouts
@@ -363,6 +353,23 @@ local function on_update(now)
     if state.next_event_time == nil then
         state.next_event_time = CONFIG.first_event_delay_s
     end
+
+    -- Flow Awakening countdown bulletins (0 to 3600 seconds)
+    if not state.awakened then
+        if state.last_bulletin == nil then state.last_bulletin = -1 end
+        local remaining = CONFIG.first_event_delay_s - now
+        if remaining > 0 then
+            local mins = math.floor(remaining / 60)
+            if (mins == 45 or mins == 30 or mins == 15 or mins == 5 or mins == 1) and state.last_bulletin ~= mins then
+                state.last_bulletin = mins
+                Bindings.notify_all(("FLOW FORECAST: The Flow is dormant. Inter-system star travel awakens in %d minutes (at the 1-hour mark). Build Phase Gates to secure custom routes!"):format(mins))
+            end
+        elseif now >= CONFIG.first_event_delay_s then
+            state.awakened = true
+            Bindings.notify_all("THE FLOW AWAKENS! The 1-hour mark has been reached. Inter-system Flow streams are phasing in! Evanescent streams will now phase in and out randomly across the galaxy.")
+        end
+    end
+
     announce_eligibility(now)
     if state.pending ~= nil then
         deliver_notices(now)
@@ -419,7 +426,7 @@ end
 function Bindings.remove_stream_lane(stream_id)
     if not event_context then return end
     local a, b = get_stream_nodes(stream_id)
-    if a and b and event_context.simulation.remove_phase_lane then
+    if a and b and event_context.simulation and event_context.simulation.remove_phase_lane then
         pcall(function() event_context.simulation:remove_phase_lane(a, b) end)
     end
 end
@@ -427,8 +434,8 @@ end
 function Bindings.create_stream_lane(stream_id)
     if not event_context then return end
     local a, b = get_stream_nodes(stream_id)
-    if a and b and event_context.simulation.create_phase_lane then
-        pcall(function() event_context.simulation:create_phase_lane(a, b, "wormhole") end)
+    if a and b and event_context.simulation and event_context.simulation.create_phase_lane then
+        pcall(function() event_context.simulation:create_phase_lane(a, b, "normal") end)
     end
 end
 
